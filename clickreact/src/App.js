@@ -1,37 +1,67 @@
 import React, { Component } from 'react';
-import Container from './components/Container';
 import card from './card.json'
-import CardSetup from './components/cardstyle/CardSetup'
+import CardSetup from './components/cardstyle'
+import NavBar from './components/NavBar';
 
 class App extends Component {
 
-  state = {
-    card
+  //dealing with the score
+    state = {
+      score: 0,
+      topScore: 0,
+      isGameOver: false,
+      card
   };
 
-  clicked = id => {
-    //set card.clicked = true
-    // then recall the card state
-    console.log("was clicked")
+  maxScore = () => {
+      if(this.state.score> this.state.topScore){
+      this.setState(
+                {topScore: this.state.score}
+            )
+      }
+     };
+
+
+  handleClicked = id => {
+    console.log(id)
+
+    for (var i=0; i<this.state.card.length; i++){
+      if (this.state.card[i].id === id){
+        if (this.state.card[i].clicked === true){
+          console.log("game over")
+          
+        }
+        else{
+        this.state.card[i].clicked = true;
+        this.state.score ++;
+        }
+      }
+    }
+    this.setState({
+      card,
+      score: this.state.score
+    });
+    this.maxScore();
+    
   };
 
 
   render() {
     return (
       <div>
-      <Container />
+      <NavBar score={this.state.score} topScore={this.state.topScore}></NavBar>
 
       {this.state.card.map(card => (
         <CardSetup 
-        clicked={this.clicked}
+        handleClicked={this.handleClicked}
         id={card.id}
         image={card.image}
         clicked={card.clicked}
         />
       ))
     }
-    </div>
 
+    </div>
     )
   }
 }

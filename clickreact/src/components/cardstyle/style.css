@@ -1,5 +1,10 @@
-.card{
-    max-width: 150px;
-    max-height: 150px;
-    background-color: aqua;
+img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+}
+.card {
+    display: inline-block;
+    margin: 30px;
+    padding: 10px;
 }

@@ -1,36 +1,36 @@
-import React from 'react';
-import NavBar from './NavBar';
-// import GameLogic from './GameLogic';
+// import React from 'react';
+// import NavBar from './NavBar';
 
-class Container extends React.Component {
 
-    state = {
-        score: 0,
-        topScore: 0,
-        isGameOver: false
-    };
+// class Container extends React.Component {
 
-    maxScore = (scores) => {
-        var topScore = Math.max(scores)
-        this.setState(
-            {topScore: topScore}
-        )
-        return topScore
-    };
+//     state = {
+//         score: 0,
+//         topScore: 0,
+//         isGameOver: false
+//     };
 
-    render(){
+//     maxScore = (scores) => {
+//         var topScore = Math.max(scores)
+//         this.setState(
+//             {topScore: topScore}
+//         )
+//         return topScore
+//     };
+
+//     render(){
         
- return (
-     <div>
-     <NavBar score={this.state.score} topScore={this.state.topScore}></NavBar>
-     {/* import gamelogic but rename it here */}
-     </div>
+//  return (
+//      <div>
+//      <NavBar score={this.state.score} topScore={this.state.topScore}></NavBar>
     
-    )
- }
+//      </div>
+    
+//     )
+//  }
     
     
 
-};
+// };
 
-export default Container;
+// export default Container;
