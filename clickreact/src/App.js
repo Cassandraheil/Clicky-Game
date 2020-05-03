@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import card from './card.json'
 import CardSetup from './components/cardstyle'
 import NavBar from './components/nav/NavBar';
+import "./style.css";
 
 class App extends Component {
 
@@ -26,11 +27,18 @@ class App extends Component {
     for (var i=0; i<this.state.card.length; i++){
       this.state.card[i].clicked = false;
       this.state.score = 0;
+      this.state.title = "Oh No, they've been clicked already! Try again"
     }
     this.setState({
       card,
-      score: this.state.score
+      score: this.state.score,
+      title: this.state.title
     });
+  }
+
+  randomize = () => {
+    //this should shuffle the cards everytime
+    console.log("shuffle le deck!")
   }
 
 
@@ -40,19 +48,21 @@ class App extends Component {
     for (var i=0; i<this.state.card.length; i++){
       if (this.state.card[i].id === id){
         if (this.state.card[i].clicked === true){
-          this.restart()
-          
+          this.restart();
+          this.randomize();
         }
         else{
         this.state.card[i].clicked = true;
         this.state.score ++;
-        // randomize the order here
+        this.state.title ="Adventure Time!";
+        this.randomize();
         }
       }
     }
     this.setState({
       card,
-      score: this.state.score
+      score: this.state.score,
+      title: this.state.title
     });
     this.maxScore();
     
@@ -62,9 +72,10 @@ class App extends Component {
   render() {
     return (
       <div>
+
       <NavBar title={this.state.title} score={this.state.score} topScore={this.state.topScore}></NavBar>
       
-      <div>
+      <div className="cards">
       {this.state.card.map(card => (
         <CardSetup 
         handleClicked={this.handleClicked}

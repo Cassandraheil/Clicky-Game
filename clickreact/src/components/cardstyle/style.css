@@ -5,7 +5,10 @@ img {
 }
 .card {
     display: inline-block;
-    margin: 30px;
-    padding: 20px;
+    margin: 45px;
+    padding: 10px;
 }
 
+.card:hover {
+    background-color: aquamarine;
+}
