@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import card from './card.json'
 import CardSetup from './components/cardstyle'
-import NavBar from './components/NavBar';
+import NavBar from './components/nav/NavBar';
 
 class App extends Component {
 
   //dealing with the score
     state = {
+      title: "Adventure Time!",
       score: 0,
       topScore: 0,
       isGameOver: false,
-      card
+      card //this.shuffle(this.card)
   };
 
   maxScore = () => {
@@ -21,6 +22,17 @@ class App extends Component {
       }
      };
 
+  restart = () => {
+    for (var i=0; i<this.state.card.length; i++){
+      this.state.card[i].clicked = false;
+      this.state.score = 0;
+    }
+    this.setState({
+      card,
+      score: this.state.score
+    });
+  }
+
 
   handleClicked = id => {
     console.log(id)
@@ -28,12 +40,13 @@ class App extends Component {
     for (var i=0; i<this.state.card.length; i++){
       if (this.state.card[i].id === id){
         if (this.state.card[i].clicked === true){
-          console.log("game over")
+          this.restart()
           
         }
         else{
         this.state.card[i].clicked = true;
         this.state.score ++;
+        // randomize the order here
         }
       }
     }
@@ -49,8 +62,9 @@ class App extends Component {
   render() {
     return (
       <div>
-      <NavBar score={this.state.score} topScore={this.state.topScore}></NavBar>
-
+      <NavBar title={this.state.title} score={this.state.score} topScore={this.state.topScore}></NavBar>
+      
+      <div>
       {this.state.card.map(card => (
         <CardSetup 
         handleClicked={this.handleClicked}
@@ -59,7 +73,7 @@ class App extends Component {
         clicked={card.clicked}
         />
       ))
-    }
+    }</div>
 
     </div>
     )
