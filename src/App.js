@@ -12,7 +12,7 @@ class App extends Component {
       score: 0,
       topScore: 0,
       isGameOver: false,
-      card //this.shuffle(this.card)
+      card
   };
 
   maxScore = () => {
@@ -24,11 +24,12 @@ class App extends Component {
      };
 
   restart = () => {
-    for (var i=0; i<this.state.card.length; i++){
+    for (var i=0; i< this.state.card.length; i++){
       this.state.card[i].clicked = false;
-      this.state.score = 0;
-      this.state.title = "Oh No, they've been clicked already! Try again"
     }
+    this.state.score = 0;
+    this.state.title = "Oh No, they've been clicked already! Try again";
+    console.log("title", this.state.title) //console.logs but doesn't display// it did before idk what changed
     this.setState({
       card,
       score: this.state.score,
@@ -36,33 +37,48 @@ class App extends Component {
     });
   }
 
-  randomize = () => {
-    //this should shuffle the cards everytime
-    console.log("shuffle le deck!")
-  }
+
+  shuffle = (arr) => {
+      var a,
+          j,
+          temp;
+      // for (a = this.state.card.length; a > 0; a--) {
+        for (a=0; a<this.state.card.length; a++){
+          j = Math.floor(Math.random() * (a - 1));
+          temp = arr[a];
+          arr[a] = arr[j];
+          arr[j] = temp;
+      }
+      return arr;    
+  };
+  
 
 
   handleClicked = id => {
     console.log(id)
+    console.log(this.state.card)
 
     for (var i=0; i<this.state.card.length; i++){
-      if (this.state.card[i].id === id){
+      
+      if (this.state.card[i] && this.state.card[i].id === id){
         if (this.state.card[i].clicked === true){
+          console.log("was already clicked")
           this.restart();
-          this.randomize();
+          // this.shuffle(card);
         }
         else{
-        this.state.card[i].clicked = true;
-        this.state.score ++;
-        this.state.title ="Adventure Time!";
-        this.randomize();
+          this.state.card[i].clicked = true
+         
+          this.state.score++
+        
+        // this.shuffle(card);
         }
       }
     }
     this.setState({
       card,
       score: this.state.score,
-      title: this.state.title
+      title: "Adventure Time!"
     });
     this.maxScore();
     
@@ -76,18 +92,22 @@ class App extends Component {
       <NavBar title={this.state.title} score={this.state.score} topScore={this.state.topScore}></NavBar>
       
       <div className="cards">
-      {this.state.card.map(card => (
+     {this.state.card.map(card => 
+      (
         <CardSetup 
+        key={"card" + card.id}
         handleClicked={this.handleClicked}
         id={card.id}
         image={card.image}
         clicked={card.clicked}
         />
       ))
-    }</div>
+      }
+      </div>
 
     </div>
     )
-  }
-}
+  };
+};
+
 export default App;
